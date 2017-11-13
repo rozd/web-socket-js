@@ -11,19 +11,13 @@ import com.hurlant.crypto.tls.TLSConfig;
 import com.hurlant.crypto.tls.TLSEngine;
 import com.hurlant.crypto.tls.TLSSecurityParameters;
 import com.hurlant.crypto.tls.TLSSocket;
+import com.hurlant.util.Base64;
 
-import flash.display.*;
-import flash.errors.*;
 import flash.events.*;
-import flash.external.*;
 import flash.net.*;
-import flash.system.*;
 import flash.utils.*;
 
-import mx.controls.*;
-import mx.core.*;
-import mx.events.*;
-import mx.utils.*;
+import skein.utils.StringUtil;
 
 public class WebSocket extends EventDispatcher {
   
@@ -71,8 +65,7 @@ public class WebSocket extends EventDispatcher {
   private var readyState:int = CONNECTING;
   
   private var logger:IWebSocketLogger;
-  private var base64Encoder:Base64Encoder = new Base64Encoder();
-  
+
   public function WebSocket(
       id:int, url:String, protocols:Array, origin:String,
       proxyHost:String, proxyPort:int,
@@ -580,9 +573,7 @@ public class WebSocket extends EventDispatcher {
     for (var i:int = 0; i < vals.length; ++i) {
         vals[i] = randomInt(0, 127);
     }
-    base64Encoder.reset();
-    base64Encoder.encodeBytes(vals);
-    return base64Encoder.toString();
+    return Base64.encodeByteArray(vals);
   }
   
   private function readUTFBytes(buffer:ByteArray, start:int, numBytes:int):String {
