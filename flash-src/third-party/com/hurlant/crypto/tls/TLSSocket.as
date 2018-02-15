@@ -129,6 +129,8 @@ package com.hurlant.crypto.tls {
 		
 		
 		override public function close():void {
+            clearTimeout(_writeScheduler);
+            _writeScheduler = 0;
 			_ready = false;
 			_engine.close();
 			if (_socket.connected) {
