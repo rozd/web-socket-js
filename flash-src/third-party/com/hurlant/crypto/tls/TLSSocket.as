@@ -122,7 +122,9 @@ package com.hurlant.crypto.tls {
 			clearTimeout(_writeScheduler);
 			_writeScheduler = 0;
 			if (_ready) {
-				_engine.sendApplicationData(_oStream);
+				if (_socket.connected) {
+					_engine.sendApplicationData(_oStream);
+				}
 				_oStream.length = 0;
 			}
 		}
